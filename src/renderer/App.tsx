@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+
 import { Trailer } from './components/trailer/Trailer';
+import './App.scss';
+import { Ringer } from './components/ringer/Ringer';
 
 enum AppState {
   Initial,
@@ -13,16 +16,24 @@ export function App() {
 
   switch (appState) {
     case AppState.Initial: {
-      return <div>Initial Screen FPO</div>;
+      return (
+        <div className='fullsize' onClick={() => setAppState(AppState.Ringer)}>
+          Initial Screen FPO
+        </div>
+      );
     }
     case AppState.Ringer: {
-      return <div />;
+      return <Ringer onNext={() => setAppState(AppState.Trailer)} />;
     }
     case AppState.Trailer: {
       return <Trailer onComplete={() => setAppState(AppState.HotlineCTA)} />;
     }
     case AppState.HotlineCTA: {
-      return <div />;
+      return (
+        <div className='fullsize' onClick={() => setAppState(AppState.Initial)}>
+          <button className='btn'>Start Over</button>
+        </div>
+      );
     }
   }
 }
