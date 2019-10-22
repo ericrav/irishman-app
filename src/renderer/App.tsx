@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 import { Trailer } from './components/trailer/Trailer';
-import './App.scss';
 import { Ringer } from './components/ringer/Ringer';
+import { Hotline } from './components/hotline/Hotline';
+import './App.scss';
 
 enum AppState {
   Initial,
@@ -29,11 +30,7 @@ export function App() {
       return <Trailer onComplete={() => setAppState(AppState.HotlineCTA)} />;
     }
     case AppState.HotlineCTA: {
-      return (
-        <div className='fullsize' onClick={() => setAppState(AppState.Initial)}>
-          <button className='btn'>Start Over</button>
-        </div>
-      );
+      return <Hotline onNext={() => setAppState(AppState.Initial)} />;
     }
   }
 }

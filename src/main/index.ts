@@ -11,7 +11,7 @@ let mainWindow: BrowserWindow | null;
 
 function createMainWindow() {
   const window = new BrowserWindow({
-    kiosk: true,
+    kiosk: !isDevelopment,
     fullscreen: true,
     webPreferences: { webSecurity: false, nodeIntegration: true },
   });
