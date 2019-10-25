@@ -3,15 +3,15 @@ import './App.scss';
 import React, { useEffect, useState } from 'react';
 
 import { Router } from './components/Router';
-import { getPort, SerialDevice } from './serial';
+import { Settings } from './components/settings/Settings';
+import { SerialDevice } from './serial';
 
 export function App() {
-  const [device, setDevice] = useState();
+  const [device, setDevice] = useState<SerialDevice>();
 
-  useEffect(() => {
-    getPort().then(port => setDevice(SerialDevice.get(port)));
-    return () => {};
-  }, []);
+  const onLaunch = ({ device }: { device: SerialDevice }) => {
+    setDevice(device);
+  };
 
-  return device ? <Router device={device} /> : null;
+  return device ? <Router device={device} /> : <Settings onLaunch={onLaunch} />;
 }

@@ -1,7 +1,8 @@
 import SerialPort from 'serialport';
 
 export const getSerialPorts = async () => {
-  return SerialPort.list();
+  const ports = await SerialPort.list();
+  return ports.sort(p1 => (p1.comName.includes('usb') ? -1 : 1));
 };
 
 export const getPort = async () => {
@@ -15,23 +16,18 @@ export const getPort = async () => {
   return portInfo.comName;
 };
 
-let device: SerialDevice;
-
 interface DeviceCallbacks {
   hookOn: () => void;
   hookOff: () => void;
 }
 
+export const connectDevice = async (path: string) => {
+  const port = new SerialPort(path, { baudRate: 9600, autoOpen: false });
+  await new Promise((resolve, reject) => port.open(e => (e ? reject(e) : resolve())));
+  return new SerialDevice(port);
+};
+
 export class SerialDevice {
-  public static get(path: string): SerialDevice {
-    if (!device) {
-      const port = new SerialPort(path, { baudRate: 9600 });
-      device = new SerialDevice(port);
-    }
-
-    return device;
-  }
-
   private onHookOff = () => {};
   private onHookOn = () => {};
 
