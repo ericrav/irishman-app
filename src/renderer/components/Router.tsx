@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Trailer } from './trailer/Trailer';
 import { Ringer } from './ringer/Ringer';
 import { Hotline } from './hotline/Hotline';
-import SerialPort from 'serialport';
+import { SerialDevice } from '../serial';
 
 enum AppState {
   Initial,
@@ -13,23 +13,16 @@ enum AppState {
 }
 
 interface Props {
-  port: SerialPort;
+  device: SerialDevice;
 }
 
-export function Router({ port }: Props) {
+export function Router({ device }: Props) {
   const [appState, setAppState] = useState(AppState.Initial);
 
   useEffect(() => {
-    port.on('readable', function() {
-      const data = port.read(8);
-      if (data) {
-        const message = data.toString();
-        if (message.includes('H_ON')) {
-          setAppState(AppState.Ringer);
-        } else if (message.includes('H_OFF')) {
-          setAppState(AppState.Trailer);
-        }
-      }
+    device.on({
+      hookOff: () => setAppState(AppState.Trailer),
+      hookOn: () => setAppState(AppState.Ringer),
     });
   }, []);
 
