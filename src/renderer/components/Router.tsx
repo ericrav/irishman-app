@@ -17,7 +17,7 @@ interface Props {
 }
 
 export function Router({ settings }: Props) {
-  const { device } = settings;
+  const { device, speaker } = settings;
   const [appState, setAppState] = useState(AppState.Initial);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export function Router({ settings }: Props) {
       );
     }
     case AppState.Ringer: {
-      return <Ringer onNext={() => setAppState(AppState.Trailer)} />;
+      return <Ringer onNext={() => setAppState(AppState.Trailer)} audioOutput={speaker} />;
     }
     case AppState.Trailer: {
       return <Trailer onComplete={() => setAppState(AppState.HotlineCTA)} />;
