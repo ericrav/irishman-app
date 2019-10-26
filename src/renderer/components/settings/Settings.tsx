@@ -12,16 +12,25 @@ interface Props {
 
 export function Settings({ onLaunch }: Props) {
   const [device, setDevice] = useState<SerialDevice>();
+  const [speaker, setSpeaker] = useState('');
+  const [handset, setHandset] = useState('');
 
   const launch = () => device && onLaunch({ device });
+
+  const missingSettings = !device || !speaker || !handset;
 
   return (
     <div className='settings fullsize'>
       <h1>Settings</h1>
       <DeviceSelector device={device} onChange={setDevice} />
-      <AudioSelector />
+      <AudioSelector
+        speaker={speaker}
+        handset={handset}
+        onSpeakerChange={setSpeaker}
+        onHandsetChange={setHandset}
+      />
 
-      <button className='settings__launch' onClick={launch} disabled={!device}>
+      <button className='settings__launch' onClick={launch} disabled={missingSettings}>
         Launch App
       </button>
     </div>
