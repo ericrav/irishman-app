@@ -1,6 +1,6 @@
 import './App.scss';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Router } from './components/Router';
 import { Settings } from './components/settings/Settings';
