@@ -4,14 +4,13 @@ import React, { useState } from 'react';
 
 import { Router } from './components/Router';
 import { Settings } from './components/settings/Settings';
-import { SerialDevice } from './serial';
 
 export function App() {
-  const [device, setDevice] = useState<SerialDevice>();
+  const [settings, setSettings] = useState<Settings>();
 
-  const onLaunch = ({ device }: { device: SerialDevice }) => {
-    setDevice(device);
+  const onLaunch = (settings: Settings) => {
+    setSettings(settings);
   };
 
-  return device ? <Router device={device} /> : <Settings onLaunch={onLaunch} />;
+  return settings ? <Router settings={settings} /> : <Settings onLaunch={onLaunch} />;
 }

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Trailer } from './trailer/Trailer';
-import { Ringer } from './ringer/Ringer';
 import { Hotline } from './hotline/Hotline';
-import { SerialDevice } from '../serial';
+import { Ringer } from './ringer/Ringer';
+import { Settings } from './settings/Settings';
+import { Trailer } from './trailer/Trailer';
 
 enum AppState {
   Initial,
@@ -13,10 +13,11 @@ enum AppState {
 }
 
 interface Props {
-  device: SerialDevice;
+  settings: Settings;
 }
 
-export function Router({ device }: Props) {
+export function Router({ settings }: Props) {
+  const { device } = settings;
   const [appState, setAppState] = useState(AppState.Initial);
 
   useEffect(() => {
