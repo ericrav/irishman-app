@@ -3,6 +3,7 @@ import './Settings.scss';
 import React, { useState } from 'react';
 
 import { SerialDevice } from '../../serial';
+import { AudioSelector } from './AudioSelector';
 import { DeviceSelector } from './DeviceSelector';
 
 interface Props {
@@ -18,6 +19,7 @@ export function Settings({ onLaunch }: Props) {
     <div className='settings fullsize'>
       <h1>Settings</h1>
       <DeviceSelector device={device} onChange={setDevice} />
+      <AudioSelector />
 
       <button className='settings__launch' onClick={launch} disabled={!device}>
         Launch App
