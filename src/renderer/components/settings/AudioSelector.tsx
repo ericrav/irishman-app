@@ -11,14 +11,17 @@ interface Props {
 
 export function AudioSelector(props: Props) {
   const { speaker, onSpeakerChange, handset, onHandsetChange } = props;
+  const [deviceRefresh, setDeviceRefresh] = useState(0);
   const [outputs, setOutputs] = useState<MediaDeviceInfo[]>([]);
   useEffect(() => {
     getDevices().then(setOutputs);
-  }, []);
+  }, [deviceRefresh]);
 
   return (
     <div>
       <h2>--- Audio Output ---</h2>
+
+      <button onClick={() => setDeviceRefresh(deviceRefresh + 1)}>Refresh Outputs</button>
 
       <h3>Ringer:</h3>
       <select onChange={e => onSpeakerChange(e.target.value)}>
