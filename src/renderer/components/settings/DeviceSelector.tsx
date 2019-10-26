@@ -9,13 +9,14 @@ interface Props {
 }
 
 export function DeviceSelector({ onChange, device }: Props) {
+  const [deviceRefresh, setDeviceRefresh] = useState(0);
   const [ports, setPorts] = useState<PortInfo[]>([]);
   const [hook, setHook] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
     getSerialPorts().then(setPorts);
-  }, []);
+  }, [deviceRefresh]);
 
   const selectPort = async (value: string) => {
     try {
@@ -44,6 +45,7 @@ export function DeviceSelector({ onChange, device }: Props) {
           </option>
         ))}
       </select>
+      <button onClick={() => setDeviceRefresh(deviceRefresh + 1)}>Refresh</button>
 
       <div>
         {error && <p>{error}</p>}
