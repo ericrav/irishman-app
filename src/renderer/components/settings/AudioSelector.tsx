@@ -10,7 +10,7 @@ interface Props {
 }
 
 export function AudioSelector(props: Props) {
-  const { speaker, onSpeakerChange, handset, onHandsetChange } = props;
+  const { speaker, onSpeakerChange } = props;
   const [deviceRefresh, setDeviceRefresh] = useState(0);
   const [outputs, setOutputs] = useState<MediaDeviceInfo[]>([]);
   useEffect(() => {
