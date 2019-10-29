@@ -4,8 +4,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "electron-webpack dev",
+    "install": "electron-rebuild",
     "compile": "electron-webpack",
-    "dist": "yarn compile && electron-builder",
+    "dist": "rm -rf dist/ && yarn compile && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "dependencies": {
@@ -14,7 +15,7 @@
     "@types/serialport": "^7.0.4",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "serialport": "^7.1.5",
+    "serialport": "^8.0.5",
     "source-map-support": "^0.5.12",
     "twilio": "^3.36.0",
     "twilio-client": "^1.9.3"
