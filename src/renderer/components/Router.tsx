@@ -4,6 +4,7 @@ import { Hotline } from './hotline/Hotline';
 import { Ringer } from './ringer/Ringer';
 import { Settings } from './settings/Settings';
 import { Trailer } from './trailer/Trailer';
+import Idle from './idle/Idle';
 
 enum AppState {
   Initial,
@@ -29,11 +30,7 @@ export function Router({ settings }: Props) {
 
   switch (appState) {
     case AppState.Initial: {
-      return (
-        <div className='fullsize' onClick={() => setAppState(AppState.Ringer)}>
-          Initial Screen FPO
-        </div>
-      );
+      return <Idle onNext={() => setAppState(AppState.Ringer)} />;
     }
     case AppState.Ringer: {
       return <Ringer onNext={() => setAppState(AppState.Trailer)} audioOutput={speaker} />;

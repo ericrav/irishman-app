@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
+import imgSrc from '../../img/02-ringing.png';
 import audioSrc from './ring.mp3';
 
 interface Props {
@@ -20,6 +21,7 @@ export function Ringer({ onNext, audioOutput }: Props) {
 
   return (
     <div className='fullsize' onClick={onNext}>
+      <img src={imgSrc} />
       <audio loop ref={audioRef}>
         <source src={audioSrc} type='audio/mpeg' />
       </audio>
