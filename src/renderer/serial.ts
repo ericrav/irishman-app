@@ -19,6 +19,8 @@ export const getPort = async () => {
 interface DeviceCallbacks {
   hookOn: () => void;
   hookOff: () => void;
+  motionOn: () => void;
+  motionOff?: () => void;
 }
 
 export const connectDevice = async (path: string) => {
@@ -30,6 +32,8 @@ export const connectDevice = async (path: string) => {
 export class SerialDevice {
   private onHookOff = () => {};
   private onHookOn = () => {};
+  private onMotionOff = () => {};
+  private onMotionOn = () => {};
 
   public constructor(port: SerialPort) {
     port.on('readable', () => {
@@ -41,6 +45,10 @@ export class SerialDevice {
           this.onHookOn();
         } else if (message.includes('H_OFF')) {
           this.onHookOff();
+        } else if (message.includes('M_ON')) {
+          this.onMotionOn();
+        } else if (message.includes('M_OFF')) {
+          this.onMotionOff();
         }
       }
     });
@@ -49,5 +57,11 @@ export class SerialDevice {
   public on(callbacks: DeviceCallbacks): void {
     this.onHookOff = callbacks.hookOff;
     this.onHookOn = callbacks.hookOn;
+    this.onMotionOn = callbacks.motionOn;
+    if (callbacks.motionOff) {
+      this.onMotionOff = callbacks.motionOff;
+    } else {
+      this.onMotionOff = () => {};
+    }
   }
 }

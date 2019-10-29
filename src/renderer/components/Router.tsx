@@ -29,6 +29,9 @@ export function Router({ settings }: Props) {
     device.on({
       hookOff: () => setAppState(AppState.Trailer),
       hookOn: () => setAppState(AppState.ThankYou),
+      motionOn: () => {
+        if (appState === AppState.Initial) setAppState(AppState.Ringer);
+      },
     });
   }, []);
 
@@ -37,7 +40,13 @@ export function Router({ settings }: Props) {
       return <Idle onNext={() => setAppState(AppState.Ringer)} />;
     }
     case AppState.Ringer: {
-      return <Ringer onNext={() => setAppState(AppState.Trailer)} audioOutput={speaker} />;
+      return (
+        <Ringer
+          onNext={() => setAppState(AppState.Trailer)}
+          onBack={() => setAppState(AppState.Initial)}
+          audioOutput={speaker}
+        />
+      );
     }
     case AppState.Trailer: {
       return <Trailer onComplete={() => setAppState(AppState.HotlineCTA)} />;
