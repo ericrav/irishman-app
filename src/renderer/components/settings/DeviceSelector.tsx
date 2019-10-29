@@ -21,7 +21,6 @@ export function DeviceSelector({ onChange, device }: Props) {
   const selectPort = async (value: string) => {
     try {
       const d = await connectDevice(value);
-      console.log('device', d);
       d.on({
         hookOff: () => setHook('Off Hook'),
         hookOn: () => setHook('On Hook'),

@@ -9,8 +9,6 @@ const authToken = process.env.ELECTRON_WEBPACK_APP_TWILIO_AUTH_TOKEN!;
 // put your Twilio Application Sid here
 const appSid = process.env.ELECTRON_WEBPACK_APP_TWILIO_APP_SID!;
 
-console.log({ accountSid, authToken, appSid });
-
 const capability = new ClientCapability({
   accountSid: accountSid,
   authToken: authToken,
@@ -23,5 +21,7 @@ const device = new Device();
 device.setup(token);
 
 export function makeCall() {
-  return device.connect({ To: process.env.ELECTRON_WEBPACK_APP_PHONE_NUMBER });
+  const isDevelopment = process.env.NODE_ENV !== 'production';
+  const phoneNumber = isDevelopment ? process.env.ELECTRON_WEBPACK_APP_PHONE_NUMBER_DEV : process.env.ELECTRON_WEBPACK_APP_PHONE_NUMBER
+  return device.connect({ To: phoneNumber });
 }

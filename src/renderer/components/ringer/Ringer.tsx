@@ -14,7 +14,6 @@ export function Ringer({ onNext, audioOutput }: Props) {
   useEffect(() => {
     const audioEl = audioRef.current;
     if (audioEl) {
-      console.log(audioEl);
       audioEl.setSinkId(audioOutput).then(() => audioEl.play());
     }
   }, [audioRef.current]);
