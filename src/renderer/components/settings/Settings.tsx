@@ -21,7 +21,7 @@ export function Settings({ onLaunch }: Props) {
   const [speaker, setSpeaker] = useState('');
   const [handset, setHandset] = useState('');
 
-  const settingsCompleted = device && speaker && handset;
+  const settingsCompleted = device && speaker;
 
   const launch = () => settingsCompleted && onLaunch({ device: device!, speaker, handset });
 

@@ -36,16 +36,17 @@ export function AudioSelector(props: Props) {
       <button onClick={() => playTestTone(speaker)}>Play Sound</button>
 
       <h3>Phone Handset:</h3>
-      <select onChange={e => onHandsetChange(e.target.value)}>
+      Use computer default audio out
+      {/* <select onChange={e => onHandsetChange(e.target.value)}>
         <option></option>
         {outputs.map(device => (
           <option key={device.deviceId} value={device.deviceId}>
             {device.label}
           </option>
         ))}
-      </select>
+      </select> */}
 
-      <button onClick={() => playTestTone(handset)}>Play Sound</button>
+      <button onClick={() => playTestTone('default')}>Play Sound</button>
     </div>
   );
 }
