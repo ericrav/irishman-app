@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "electron-webpack dev",
+    "dev": "source .env && electron-webpack dev",
     "install": "electron-rebuild",
-    "compile": "electron-webpack",
+    "compile": "source .env && electron-webpack",
     "dist": "rm -rf dist/ && yarn compile && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
