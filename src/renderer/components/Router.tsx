@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
 import { Hotline } from './hotline/Hotline';
+import HotlineCTA from './hotline/HotlineCTA';
+import Idle from './idle/Idle';
 import { Ringer } from './ringer/Ringer';
 import { Settings } from './settings/Settings';
 import { Trailer } from './trailer/Trailer';
-import Idle from './idle/Idle';
 
 enum AppState {
   Initial,
   Ringer,
   Trailer,
   HotlineCTA,
+  Hotline,
 }
 
 interface Props {
@@ -39,6 +41,9 @@ export function Router({ settings }: Props) {
       return <Trailer onComplete={() => setAppState(AppState.HotlineCTA)} />;
     }
     case AppState.HotlineCTA: {
+      return <HotlineCTA onNext={() => setAppState(AppState.Hotline)} />;
+    }
+    case AppState.Hotline: {
       return <Hotline onNext={() => setAppState(AppState.Initial)} />;
     }
   }
