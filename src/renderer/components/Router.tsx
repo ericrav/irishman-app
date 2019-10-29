@@ -5,6 +5,7 @@ import HotlineCTA from './hotline/HotlineCTA';
 import Idle from './idle/Idle';
 import { Ringer } from './ringer/Ringer';
 import { Settings } from './settings/Settings';
+import { ThankYou } from './thankyou/ThankYou';
 import { Trailer } from './trailer/Trailer';
 
 enum AppState {
@@ -13,6 +14,7 @@ enum AppState {
   Trailer,
   HotlineCTA,
   Hotline,
+  ThankYou,
 }
 
 interface Props {
@@ -26,7 +28,7 @@ export function Router({ settings }: Props) {
   useEffect(() => {
     device.on({
       hookOff: () => setAppState(AppState.Trailer),
-      hookOn: () => setAppState(AppState.Ringer),
+      hookOn: () => setAppState(AppState.ThankYou),
     });
   }, []);
 
@@ -44,7 +46,10 @@ export function Router({ settings }: Props) {
       return <HotlineCTA onNext={() => setAppState(AppState.Hotline)} />;
     }
     case AppState.Hotline: {
-      return <Hotline onNext={() => setAppState(AppState.Initial)} />;
+      return <Hotline onNext={() => setAppState(AppState.ThankYou)} />;
+    }
+    case AppState.ThankYou: {
+      return <ThankYou onNext={() => setAppState(AppState.Initial)} />;
     }
   }
 }
