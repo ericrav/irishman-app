@@ -1,6 +1,6 @@
 import React from 'react';
 
-import imgSrc from '../../img/01-idle.png';
+import imgSrc from '../../img/01.png';
 
 interface Props {
   onNext: () => void;

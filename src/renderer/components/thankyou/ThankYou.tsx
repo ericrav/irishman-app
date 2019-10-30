@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import imgSrc from '../../img/06-thankyou.png';
+import imgSrc from '../../img/03.png';
 
 interface Props {
   onNext: () => void;
@@ -8,7 +8,7 @@ interface Props {
 
 export function ThankYou({ onNext }: Props) {
   useEffect(() => {
-    const delay = setTimeout(onNext, 5000);
+    const delay = setTimeout(onNext, 10000);
 
     return () => clearTimeout(delay);
   }, []);

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-import imgSrc from '../../img/02-ringing.png';
+import imgSrc from '../../img/02.png';
 import audioSrc from './ring.mp3';
 
 interface Props {
