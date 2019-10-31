@@ -26,10 +26,12 @@ export function Router({ settings }: Props) {
       hookOff: () => setAppState(AppState.Trailer),
       hookOn: () => setAppState(AppState.ThankYou),
       motionOn: () => {
-        if (appState === AppState.Initial) setAppState(AppState.Ringer);
+        if (appState === AppState.Initial) {
+          setAppState(AppState.Ringer);
+        }
       },
     });
-  }, []);
+  }, [appState]);
 
   switch (appState) {
     case AppState.Initial: {
