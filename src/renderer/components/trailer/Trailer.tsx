@@ -1,6 +1,6 @@
 import React from 'react'
 
-import videoSrc from './trailer.mp4'
+import videoSrc from './clip.mp4'
 import './Trailer.scss';
 
 interface Props {
