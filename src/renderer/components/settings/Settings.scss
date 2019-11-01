@@ -2,12 +2,16 @@
   background: #FCF6E3;
   color: #3F3D37;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 16px;
+  font-size: 28px;
   padding: 24px;
   text-align: left;
   overflow: auto;
 
   &__launch {
     margin-top: 48px;
+  }
+
+  select, option, button {
+    font-size: 24px;
   }
 }
