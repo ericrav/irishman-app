@@ -4,9 +4,7 @@ import { getDevices, playTestTone } from './audio';
 
 interface Props {
   speaker: string;
-  handset: string;
   onSpeakerChange: (id: string) => void;
-  onHandsetChange: (id: string) => void;
 }
 
 export function AudioSelector(props: Props) {
@@ -24,7 +22,7 @@ export function AudioSelector(props: Props) {
       <button onClick={() => setDeviceRefresh(deviceRefresh + 1)}>Refresh Outputs</button>
 
       <h3>Ringer:</h3>
-      <select onChange={e => onSpeakerChange(e.target.value)}>
+      <select onChange={e => onSpeakerChange(e.target.value)} value={speaker}>
         <option></option>
         {outputs.map(device => (
           <option key={device.deviceId} value={device.deviceId}>

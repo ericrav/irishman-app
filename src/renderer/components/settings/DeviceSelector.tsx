@@ -4,13 +4,15 @@ import { PortInfo } from 'serialport';
 import { connectDevice, getSerialPorts, SerialDevice } from '../../serial';
 
 interface Props {
+  portPath?: string;
   device: SerialDevice | undefined;
   onChange: (device: SerialDevice) => void;
 }
 
-export function DeviceSelector({ onChange, device }: Props) {
+export function DeviceSelector({ portPath, onChange, device }: Props) {
   const [deviceRefresh, setDeviceRefresh] = useState(0);
   const [ports, setPorts] = useState<PortInfo[]>([]);
+  const [port, setPort] = useState<string>();
   const [hook, setHook] = useState('');
   const [motion, setMotion] = useState('');
   const [error, setError] = useState('');
@@ -20,6 +22,7 @@ export function DeviceSelector({ onChange, device }: Props) {
   }, [deviceRefresh]);
 
   const selectPort = async (value: string) => {
+    setPort(value);
     try {
       const d = await connectDevice(value);
       d.on({
@@ -35,11 +38,17 @@ export function DeviceSelector({ onChange, device }: Props) {
     }
   };
 
+  useEffect(() => {
+    if (portPath) {
+      selectPort(portPath);
+    }
+  }, [portPath]);
+
   return (
     <div>
       <h2>--- Arduino Serial Port ---</h2>
 
-      <select onChange={e => selectPort(e.target.value)}>
+      <select onChange={e => selectPort(e.target.value)} value={port}>
         <option></option>
         {ports.map(port => (
           <option key={port.comName} value={port.comName}>

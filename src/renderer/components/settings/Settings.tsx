@@ -1,6 +1,6 @@
 import './Settings.scss';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { SerialDevice } from '../../serial';
 import { AudioSelector } from './AudioSelector';
@@ -9,7 +9,6 @@ import { DeviceSelector } from './DeviceSelector';
 export interface Settings {
   device: SerialDevice;
   speaker: string;
-  handset: string;
 }
 
 interface Props {
@@ -18,22 +17,43 @@ interface Props {
 
 export function Settings({ onLaunch }: Props) {
   const [device, setDevice] = useState<SerialDevice>();
+  const [portPath, setPortPath] = useState<string>();
   const [speaker, setSpeaker] = useState('');
-  const [handset, setHandset] = useState('');
+
+  useEffect(() => {
+    try {
+      const port = localStorage.getItem('port');
+      const speaker = localStorage.getItem('speaker');
+      if (speaker) {
+        setSpeaker(speaker);
+      }
+
+      if (port) {
+        setPortPath(port);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
 
   const settingsCompleted = device && speaker;
 
-  const launch = () => settingsCompleted && onLaunch({ device: device!, speaker, handset });
+  const launch = () => {
+    if (device && speaker) {
+      const data = { device, speaker };
+      localStorage.setItem('port', device.port.path);
+      localStorage.setItem('speaker', speaker);
+      onLaunch(data);
+    }
+  };
 
   return (
     <div className='settings fullsize'>
       <h1>Settings</h1>
-      <DeviceSelector device={device} onChange={setDevice} />
+      <DeviceSelector portPath={portPath} device={device} onChange={setDevice} />
       <AudioSelector
         speaker={speaker}
-        handset={handset}
         onSpeakerChange={setSpeaker}
-        onHandsetChange={setHandset}
       />
 
       <button className='settings__launch' onClick={launch} disabled={!settingsCompleted}>

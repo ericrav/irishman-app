@@ -35,7 +35,7 @@ export class SerialDevice {
   private onMotionOff = () => {};
   private onMotionOn = () => {};
 
-  public constructor(port: SerialPort) {
+  public constructor(public port: SerialPort) {
     port.on('readable', () => {
       const data = port.read(8);
       if (data) {
