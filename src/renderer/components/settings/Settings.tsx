@@ -19,22 +19,8 @@ export function Settings({ onLaunch }: Props) {
   const [device, setDevice] = useState<SerialDevice>();
   const [portPath, setPortPath] = useState<string>();
   const [speaker, setSpeaker] = useState('');
-
-  useEffect(() => {
-    try {
-      const port = localStorage.getItem('port');
-      const speaker = localStorage.getItem('speaker');
-      if (speaker) {
-        setSpeaker(speaker);
-      }
-
-      if (port) {
-        setPortPath(port);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
+  const [usingSavedSettings, setUsingSaved] = useState(false);
+  const [shouldLaunch, setShouldLaunch] = useState(false);
 
   const settingsCompleted = device && speaker;
 
@@ -47,14 +33,47 @@ export function Settings({ onLaunch }: Props) {
     }
   };
 
+  useEffect(() => {
+    if (shouldLaunch && usingSavedSettings) {
+      launch();
+    }
+  }, [shouldLaunch]);
+
+  useEffect(() => {
+    try {
+      const port = localStorage.getItem('port');
+      const speaker = localStorage.getItem('speaker');
+      if (speaker) {
+        setSpeaker(speaker);
+      }
+
+      if (port) {
+        setPortPath(port);
+      }
+
+      if (speaker && port) {
+        setUsingSaved(true);
+        setTimeout(() => setShouldLaunch(true), 4000);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
   return (
     <div className='settings fullsize'>
       <h1>Settings</h1>
+
+      {usingSavedSettings && (
+        <>
+          <p>
+            <strong>Launching with saved settings...</strong>
+          </p>
+          <button onClick={() => setUsingSaved(false)}>Cancel</button>
+        </>
+      )}
       <DeviceSelector portPath={portPath} device={device} onChange={setDevice} />
-      <AudioSelector
-        speaker={speaker}
-        onSpeakerChange={setSpeaker}
-      />
+      <AudioSelector speaker={speaker} onSpeakerChange={setSpeaker} />
 
       <button className='settings__launch' onClick={launch} disabled={!settingsCompleted}>
         Launch App
