@@ -18,7 +18,7 @@ interface Props {
 }
 
 export function Router({ settings }: Props) {
-  const { device, speaker } = settings;
+  const { device, speaker, clip } = settings;
   const [appState, setAppState] = useState(AppState.Initial);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export function Router({ settings }: Props) {
       );
     }
     case AppState.Trailer: {
-      return <Trailer onComplete={() => setAppState(AppState.ThankYou)} />;
+      return <Trailer clip={clip} onComplete={() => setAppState(AppState.ThankYou)} />;
     }
     case AppState.ThankYou: {
       return <ThankYou onNext={() => setAppState(AppState.Initial)} />;
